@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yapaka Sampanthamat Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* CORE DESIGN & LAYOUT */
+        * { box-sizing: border-box; }
+        body {
+            background-color: #0f172a;
+            display: grid;
+            gap: 40px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 0;
+            place-items: center;
+            font-family: 'Prompt', 'Inter', sans-serif;
+        }
+
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+            page-break-after: always;
+        }
+
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(2, 132, 199, 0.1) 100%);
+            clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 0;
+        }
+
+        .slide-container > * { position: relative; z-index: 1; }
+
+        h1, h2, h3 { color: #1e293b; margin: 0; }
+        .slide-title {
+            font-size: 44px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #0f172a;
+            border-left: 10px solid #0ea5e9;
+            padding-left: 24px;
+            text-transform: uppercase;
+        }
+
+        p, li { font-size: 20px; color: #475569; line-height: 1.6; }
+        .subtitle { font-size: 24px; color: #64748b; margin-top: -30px; margin-bottom: 40px; }
+
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* TITLE LAYOUT */
+        .title-layout {
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 80px;
+            border-radius: 0;
+        }
+        .title-layout h1 { color: #f8fafc; font-size: 80px; font-weight: 700; margin-bottom: 20px; }
+        .title-layout .subtitle { color: #38bdf8; font-size: 32px; font-weight: 400; border: none; margin: 0; }
+
+        /* GRID & COLUMN LAYOUTS */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .image-wrapper {
+            border-radius: 16px;
+            height: 420px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+
+        .tiled-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+        }
+        .tile {
+            background-color: #f8fafc;
+            border-radius: 16px;
+            padding: 32px;
+            border-bottom: 6px solid #0ea5e9;
+        }
+        .tile i { font-size: 40px; color: #0ea5e9; margin-bottom: 20px; }
+        .tile h3 { font-size: 28px; margin-bottom: 12px; }
+
+        /* TIMELINE */
+        .timeline-layout {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+            height: 400px;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #e2e8f0;
+            z-index: 0;
+        }
+        .timeline-item {
+            width: 45%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
+            border: 1px solid #f1f5f9;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #0ea5e9;
+            border: 4px solid white;
+            border-radius: 50%;
+        }
+        .timeline-item:nth-child(odd) { align-self: flex-start; margin-top: -50px; }
+        .timeline-item:nth-child(even) { align-self: flex-end; margin-bottom: -50px; }
+
+        /* SPECIAL LAYOUTS */
+        .bleed-image-layout {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 0;
+            align-items: start;
+        }
+        .bleed-text-side { padding: 80px 60px; }
+        .bleed-image-side { 
+            height: 720px; 
+            width: 100%; 
+            object-fit: contain; 
+            background-color: #f8fafc;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .highlight-numbers-layout {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+        }
+        .number-box { text-align: center; }
+        .number { font-size: 110px; font-weight: 700; color: #0ea5e9; line-height: 1; }
+        .number-label { font-size: 24px; color: #64748b; font-weight: 600; margin-top: 10px; }
+
+        .bullet-list { list-style: none; padding: 0; }
+        .bullet-list li { position: relative; padding-left: 40px; margin-bottom: 20px; }
+        .bullet-list li i { position: absolute; left: 0; top: 6px; color: #0ea5e9; font-size: 24px; }
+
+        .table-layout { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table-layout th { background-color: #f1f5f9; padding: 20px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+        .table-layout td { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; font-size: 18px; }
+
+        .qa-layout { text-align: center; width: 100%; }
+        .qa-layout h2 { font-size: 72px; color: #0f172a; margin-bottom: 20px; }
+
+        .two-column.tiled > div {
+            background-color: #f8fafc;
+            border-radius: 16px;
+            padding: 35px;
+            border-top: 5px solid #0ea5e9;
+        }
+
+        /* ACTIONS */
+        .action-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .btn {
+            background-color: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0284c7;
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(14, 165, 233, 0.5);
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body { background-color: white; padding: 0; display: block; }
+            .action-buttons { display: none; }
+            .slide-container {
+                width: 100%;
+                height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+                border: none;
+            }
+            .slide-container::before { opacity: 0.1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title_Slide -->
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <h1>ญาปกา สัมพันธมาศ</h1>
+        <p class="subtitle">Computer Systems Analyst | Portfolio Presentation</p>
+        <p style="margin-top: 40px; color: #94a3b8; font-size: 20px;">ศูนย์นวัตกรรมดิจิทัล มหาวิทยาลัยวลัยลักษณ์</p>
+    </div>
+</div>
+
+<!-- Slide 2: Timeline Experience -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">ประวัติการทำงานและประสบการณ์</h2>
+    <div class="content-area">
+        <div class="timeline-layout">
+            <div class="timeline-line"></div>
+            <div class="timeline-item">
+                <h3 style="color: #0ea5e9;">2563 - 2565</h3>
+                <p><strong>ส่วนทรัพยากรมนุษย์และองค์กร</strong></p>
+                <p style="font-size: 16px;">เจ้าหน้าที่บริหารงานทั่วไป: ดึงข้อมูล (Query) วิเคราะห์บุคลากร และประสานงานระบบ WU-HRMS</p>
+            </div>
+            <div class="timeline-item">
+                <h3 style="color: #0ea5e9;">2565 - ปัจจุบัน</h3>
+                <p><strong>ศูนย์นวัตกรรมดิจิทัล</strong></p>
+                <p style="font-size: 16px;">นักวิเคราะห์ระบบ: พัฒนา Full Stack (Yii2, React, Node.js) และดูแลระบบส่วนกลางของมหาวิทยาลัย</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Transition & Skillset -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">บทบาทสำคัญ: จาก Admin สู่ Analyst</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>การผสานความเข้าใจองค์กรเข้ากับเทคโนโลยี</h3>
+                <p>จากประสบการณ์ในส่วนทรัพยากรมนุษย์ ทำให้มีความเข้าใจในโครงสร้างข้อมูลบุคลากรอย่างลึกซึ้ง นำมาประยุกต์ใช้ในการวิเคราะห์และพัฒนาระบบให้ตอบโจทย์ผู้ใช้งานจริง</p>
+                <ul class="bullet-list" style="margin-top: 20px;">
+                    <li><i class="fa-solid fa-code"></i> การพัฒนาระบบ Front-end ด้วย Yii2 PHP และ React</li>
+                    <li><i class="fa-solid fa-magnifying-glass-chart"></i> การดึงข้อมูลและวิเคราะห์เพื่อสนับสนุนการตัดสินใจ</li>
+                    <li><i class="fa-solid fa-users-gear"></i> การเป็นวิทยากรอบรมและดูแลผู้ใช้งานอย่างมืออาชีพ</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="https://images.unsplash.com/photo-1573161158365-59b832b0d35b?q=80&w=1280&h=720&auto=format&fit=crop" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Key Responsibilities -->
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">ขอบเขตงานและความรับผิดชอบหลัก</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <i class="fa-solid fa-laptop-code"></i>
+                <h3>งานพัฒนาระบบ</h3>
+                <p>พัฒนา Web Application แบบ Full Stack ดูแลระบบ WU-RSS และโมดูลสำคัญใน WU-HRMS</p>
+            </div>
+            <div class="tile">
+                <i class="fa-solid fa-server"></i>
+                <h3>System Support</h3>
+                <p>ดูแลและบำรุงรักษาระบบฐานข้อมูลของมหาวิทยาลัยให้มีความเสถียรและปลอดภัย</p>
+            </div>
+            <div class="tile">
+                <i class="fa-solid fa-chalkboard-user"></i>
+                <h3>วิทยากรอบรม</h3>
+                <p>ถ่ายทอดองค์ความรู้และอบรมการใช้งานระบบให้กับพนักงานและหน่วยงานต่างๆ</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: Showcase 1 (HRMS Overview) -->
+<div class="slide-container bleed-image-layout" id="slide5">
+    <div class="bleed-text-side">
+        <h2 class="slide-title" style="border: none; padding: 0;">Showcase: ระบบ WU-HRMS</h2>
+        <p><strong>หัวใจสำคัญของการบริหารบุคลากร</strong></p>
+        <p>เว็บแอปพลิเคชันที่จัดการข้อมูลพนักงานทั้งมหาวิทยาลัย พัฒนาด้วยเทคโนโลยี PHP (Yii Framework)</p>
+        <ul class="bullet-list">
+            <li><i class="fa-solid fa-check"></i> โมดูลความก้าวหน้าในวิชาชีพ</li>
+            <li><i class="fa-solid fa-check"></i> งานนักเรียนทุนและลาศึกษาต่อ</li>
+            <li><i class="fa-solid fa-check"></i> โมดูลพัฒนาบุคลากร ฝึกอบรม</li>
+        </ul>
+    </div>
+    <img class="bleed-image-side" src="hrms.jpg" alt="" onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1280&h=720&auto=format&fit=crop'">
+</div>
+
+<!-- Slide 6: Module Detail -->
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">WU-HRMS: โมดูลพัฒนาบุคลากร ฝึกอบรม</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>ฟีเจอร์เด่นและมาตรฐานการทำงาน</h3>
+                <ul class="bullet-list">
+                    <li><i class="fa-solid fa-clock-rotate-left"></i> <strong>Real-time Status:</strong> ตรวจสอบสถานะการอบรมได้ทันที</li>
+                    <li><i class="fa-solid fa-user-shield"></i> <strong>RBAC Architecture:</strong> กำหนดสิทธิ์การมองเห็นข้อมูลตามบทบาทผู้ใช้</li>
+                    <li><i class="fa-solid fa-clipboard-check"></i> <strong>Data Integrity:</strong> ตรวจสอบข้อมูลซ้ำและสิทธิ์ก่อนลงทะเบียน</li>
+                    <li><i class="fa-solid fa-file-export"></i> <strong>Reporting System:</strong> บันทึกผลและ Export รายงานได้ (Excel / PDF)</li>
+                </ul>
+            </div>
+            <div style="background-color: #f1f5f9; padding: 30px; border-radius: 12px; border-right: 8px solid #0ea5e9;">
+                <h4 style="margin-top: 0;">ครอบคลุมงานสำคัญ:</h4>
+                <p style="font-size: 18px; margin-bottom: 10px;">• งานพนักงานลาศึกษาต่อ</p>
+                <p style="font-size: 18px; margin-bottom: 10px;">• งานนักเรียนทุนของมหาวิทยาลัย</p>
+                <p style="font-size: 18px; margin-bottom: 10px;">• การฝึกอบรมและพัฒนาทักษะวิชาชีพ</p>
+                <p style="font-size: 18px;">• การบันทึกเวลาปฏิบัติงานและการลา</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Showcase 2 (Cost Management) -->
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">Showcase: ระบบจัดการต้นทุน ศคว.</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Modern Web Tech</h3>
+                <p>พัฒนาระบบด้วย <strong>React และ Node.js (Next.js)</strong> เพื่อประสิทธิภาพการใช้งานที่ลื่นไหลและทันสมัย</p>
+                <p>ต่อยอดจากการอบรม IBM Full Stack JavaScript Developer Professional Certificate</p>
+                <ul class="bullet-list" style="margin-top: 20px;">
+                    <li><i class="fa-solid fa-microchip"></i> จัดการข้อมูลตั้งต้นและแผนบริการ</li>
+                    <li><i class="fa-solid fa-flask"></i> บริการห้องปฏิบัติการตามรายวิชา</li>
+                    <li><i class="fa-solid fa-chart-line"></i> รายงานสรุปต้นทุนและการใช้งาน</li>
+                </ul>
+            </div>
+            <div class="image-wrapper">
+                <img src="c.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Technical Excellence -->
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title">เทคโนโลยีที่เชี่ยวชาญและนำมาใช้</h2>
+    <div class="content-area">
+        <div class="highlight-numbers-layout">
+            <div class="number-box">
+                <div class="number">React</div>
+                <div class="number-label">Modern Frontend</div>
+            </div>
+            <div class="number-box">
+                <div class="number">Node.js</div>
+                <div class="number-label">High Performance</div>
+            </div>
+            <div class="number-box">
+                <div class="number">Next.js</div>
+                <div class="number-label">Optimized Framework</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: System Table -->
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">ระบบอื่นๆ และความสำเร็จ</h2>
+    <div class="content-area">
+        <table class="table-layout">
+            <thead>
+                <tr>
+                    <th>ระบบ</th>
+                    <th>หน้าที่ความรับผิดชอบ</th>
+                    <th>สถานะ / ผลลัพธ์</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>WU-Research Support (WU-RSS)</td>
+                    <td>โมดูลวิจัย / Dashboard / Data Sync</td>
+                    <td>กำลังพัฒนา / เชื่อมต่อ Portal</td>
+                </tr>
+                <tr>
+                    <td>ระบบบริหารหลักสูตร (TQF2)</td>
+                    <td>ดูแลและพัฒนาระบบตามเกณฑ์มาตรฐาน</td>
+                    <td>ใช้งานจริงภายในมหาวิทยาลัย</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 600; color: #0ea5e9;">ระบบ VOTE และกิจกรรม</td>
+                    <td style="background-color: #f0f9ff;">ทดสอบระบบและแนะนำการใช้งานแก่ผู้ใช้</td>
+                    <td>สนับสนุนกิจกรรมส่วนกลาง</td>
+                </tr>
+                <tr>
+                    <td>ระบบบันทึกเวลาและการลา</td>
+                    <td>ดูแลความถูกต้องและเชื่อมโยงข้อมูล</td>
+                    <td>ใช้งานครอบคลุมทุกหน่วยงาน</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 10: Strengths -->
+<div class="slide-container" id="slide10">
+    <h2 class="slide-title">จุดแข็งและตัวตนในการทำงาน</h2>
+    <div class="content-area">
+        <div class="two-column" style="align-items: center;">
+            <div style="text-align: center;">
+                 <i class="fa-solid fa-user-check" style="font-size: 200px; color: #0ea5e9;"></i>
+            </div>
+            <div>
+                <ul class="bullet-list">
+                    <li><i class="fa-solid fa-hand-holding-heart"></i> <strong>ไม่เลือกงาน:</strong> พร้อมสนับสนุนทีมในทุกบทบาทเพื่อให้เป้าหมายสำเร็จ</li>
+                    <li><i class="fa-solid fa-magnifying-glass-chart"></i> <strong>Analytical Mind:</strong> วิเคราะห์ปัญหาอย่างเป็นระบบและปรับตัวเก่ง</li>
+                    <li><i class="fa-solid fa-users"></i> <strong>Team Player:</strong> ทำงานร่วมกับผู้อื่นได้ดี มีความรับผิดชอบสูง</li>
+                    <li><i class="fa-solid fa-bolt"></i> <strong>Fast Learner:</strong> เรียนรู้เทคโนโลยีใหม่ๆ และนำมาปรับใช้ได้ทันที</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Development Plan -->
+<div class="slide-container" id="slide11">
+    <h2 class="slide-title">แผนการพัฒนาตนเองสู่ความเป็นมืออาชีพ</h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3>Areas for Improvement</h3>
+                <p>พัฒนากรสื่อสารเชิงนำเสนอ และการอธิบายเรื่องเทคนิคให้เป็นภาษางานที่เข้าใจง่ายสำหรับผู้ใช้ทั่วไป</p>
+            </div>
+            <div>
+                <h3>Action Plan</h3>
+                <ul class="bullet-list" style="margin-top: 10px; font-size: 16px;">
+                    <li><i class="fa-solid fa-microphone-lines"></i> ฝึกทักษะการนำเสนอภายในทีมอย่างสม่ำเสมอ</li>
+                    <li><i class="fa-solid fa-book-open"></i> เรียนรู้เทคโนโลยีใหม่ๆ (AI/Cloud) ในการพัฒนา</li>
+                    <li><i class="fa-solid fa-lightbulb"></i> ฝึกการสรุปแนวคิดให้กระชับและตรงประเด็น</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Q&A -->
+<div class="slide-container" id="slide12">
+    <div class="qa-layout">
+        <h2>QUESTIONS?</h2>
+        <p>ขอขอบพระคุณสำหรับเวลาและโอกาสในวันนี้ค่ะ</p>
+        <hr style="width: 100px; border: 2px solid #0ea5e9; margin: 30px auto;">
+        <div style="margin-top: 40px; color: #64748b; font-size: 24px;">
+            <p><i class="fa-solid fa-user"></i> ญาปกา สัมพันธมาศ</p>
+            <p><i class="fa-solid fa-building"></i> ศูนย์นวัตกรรมดิจิทัล มหาวิทยาลัยวลัยลักษณ์</p>
+        </div>
+    </div>
+</div>
+
+<!-- Floating Action Buttons for User -->
+<div class="action-buttons">
+    <button class="btn" onclick="window.print()">
+        <i class="fa-solid fa-file-pdf"></i> บันทึกเป็น PDF
+    </button>
+</div>
+
+</body>
+</html>
